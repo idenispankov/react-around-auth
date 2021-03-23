@@ -13,7 +13,6 @@ import EditProfilePopup from '../components/EditProfilePopup';
 import EditAvatarPopup from '../components/EditAvatarPopup';
 import AddPlacePopup from '../components/AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
-import Footer from './Footer';
 
 export default function AroundTheUs() {
   const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
@@ -191,7 +190,6 @@ export default function AroundTheUs() {
         deleteCard={deleteCard}
       />
       <ImagePopup onClose={closeAllPopups} selectedCard={selectedCard} />
-      <Footer />
     </CurrentUserContext.Provider>
   );
 }
