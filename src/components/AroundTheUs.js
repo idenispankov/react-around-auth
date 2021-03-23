@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react';
-// import logo from '../images/header__logo.svg';
-// import '../index.css';
 import api from '../utils/api';
 import avatar from '../images/avatar_type_dark.jpg';
 import { CurrentUserContext } from '../context/CurrentUserContext';
-
-// import Header from './Header';
 import Main from './Main';
-// import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from '../components/EditProfilePopup';
 import EditAvatarPopup from '../components/EditAvatarPopup';

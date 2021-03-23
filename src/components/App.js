@@ -1,5 +1,5 @@
-// import { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import AroundTheUs from './AroundTheUs';
@@ -8,6 +8,8 @@ import Register from './Register';
 import { AccountContext } from '../context/AccountContext';
 
 export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <AccountContext.Provider value={AccountContext}>
       <div className='page'>
@@ -15,7 +17,7 @@ export default function App() {
           <Header />
 
           <Switch>
-            <Route exact path='/'>
+            <Route path='/around'>
               <AroundTheUs />
             </Route>
 
@@ -23,8 +25,12 @@ export default function App() {
               <Login />
             </Route>
 
-            <Route exact path='/signup'>
+            <Route path='/signup'>
               <Register />
+            </Route>
+
+            <Route path='/'>
+              {loggedIn ? <Redirect to='/around' /> : <Redirect to='/signin' />}
             </Route>
           </Switch>
 
