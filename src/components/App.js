@@ -1,7 +1,7 @@
 // import { useState, useEffect } from 'react';
 // import { Route, Switch } from 'react-router-dom';
-import Login from './Login';
-// import Register from './Register';
+// import Login from './Login';
+import Register from './Register';
 import Header from './Header';
 // import AroundTheUs from './AroundTheUs';
 // import Login from './Login';
@@ -14,7 +14,8 @@ export default function App() {
         <div className='page__container'>
           <Header />
           {/* <AroundTheUs /> */}
-          <Login />
+          {/* <Login /> */}
+          <Register />
           {/* <Switch>
             <ProtectedRoute exact path='/' component={AroundTheUs} />
           </Switch>
