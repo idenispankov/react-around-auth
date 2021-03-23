@@ -17,7 +17,7 @@ export default function App() {
           <Header />
 
           <Switch>
-            <Route path='/around'>
+            <Route exact path='/around'>
               <AroundTheUs />
             </Route>
 
