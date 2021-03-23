@@ -13,9 +13,10 @@
   border-radius: 10px;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
   position: relative;
+  margin: 0 auto;
 }
 
-@media screen and (max-width:500px) {
+@media screen and (max-width: 500px) {
   .form {
     width: calc(100% - 70px);
   }

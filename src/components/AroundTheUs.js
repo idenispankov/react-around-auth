@@ -13,6 +13,7 @@ import EditProfilePopup from '../components/EditProfilePopup';
 import EditAvatarPopup from '../components/EditAvatarPopup';
 import AddPlacePopup from '../components/AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
+import Footer from './Footer';
 
 export default function AroundTheUs() {
   const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
@@ -190,55 +191,7 @@ export default function AroundTheUs() {
         deleteCard={deleteCard}
       />
       <ImagePopup onClose={closeAllPopups} selectedCard={selectedCard} />
-      {/* <div className='page'>
-        <div className='page__container'>
-          <Header logo={logo} />
-
-          <Main
-            onEditAvatar={handleEditAvatarClick}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onDeleteClick={handleDeleteCardClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onDeleteCard={handleCardDelete}
-            onLikeClick={handleCardLike}
-          />
-
-          <Footer footerText='&copy; 2020 Around The U.S.' />
-        </div>
-
-        <EditProfilePopup
-          isOpen={isProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-          submitStatus={submitStatus}
-          setSubmitStatus={setSubmitStatus}
-        />
-        <EditAvatarPopup
-          isOpen={isAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-          submitStatus={submitStatus}
-          setSubmitStatus={setSubmitStatus}
-        />
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
-          submitStatus={submitStatus}
-          setSubmitStatus={setSubmitStatus}
-        />
-        <DeleteCardPopup
-          isOpen={isDeleteCardPopupOpen}
-          onClose={closeAllPopups}
-          onDeleteCard={handleCardDelete}
-          submitStatus={submitStatus}
-          setSubmitStatus={setSubmitStatus}
-          deleteCard={deleteCard}
-        />
-        <ImagePopup onClose={closeAllPopups} selectedCard={selectedCard} />
-      </div> */}
+      <Footer />
     </CurrentUserContext.Provider>
   );
 }

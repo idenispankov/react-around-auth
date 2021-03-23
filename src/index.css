@@ -9,3 +9,49 @@
 @import url(./blocks/modal/modal.css);
 @import url(./blocks/modal/_is-open/modal_is-open.css);
 @import url(./blocks/form/form.css);
+
+.form_type-authorization {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  max-width: 358px;
+  min-height: 444px;
+}
+
+.form__title_type-authorization {
+  background-color: #000;
+  width: 100%;
+  color: #fff;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  padding-bottom: 50px;
+}
+
+.form__input_type-authorization {
+  background-color: #000;
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+  margin: 0;
+  margin-bottom: 30px;
+  color: #ccc;
+  outline: none;
+}
+
+.form__input_type-authorization:last-of-type {
+  margin-bottom: 216px;
+}
+
+.form__button_type-authorization {
+  background-color: #fff;
+  color: #000;
+  margin-bottom: 15px;
+}
+
+.form__text {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #fff;
+  text-decoration: none;
+}
