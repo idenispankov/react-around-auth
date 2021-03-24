@@ -9,3 +9,66 @@
 @import url(./blocks/modal/modal.css);
 @import url(./blocks/modal/_is-open/modal_is-open.css);
 @import url(./blocks/form/form.css);
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__button {
+  height: 22px;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.5s linear;
+}
+
+.header__button:hover {
+  opacity: 0.7;
+}
+/* Form */
+.form__autorization {
+  /* border: 1px solid red; */
+  background-color: #000;
+  margin: 0 auto;
+  text-align: center;
+  width: 358px;
+}
+
+.form__title-autorization {
+  color: #fff;
+  margin: 20px 0 50px;
+}
+
+.form__input_autorization {
+  background-color: #000;
+  border-bottom: 2px solid #fff;
+  margin: 0 0 30px;
+  color: #fff;
+  outline: none;
+}
+
+.form__input_autorization:last-of-type {
+  margin-bottom: 216px;
+}
+
+.form__button_autorization {
+  border: none;
+  background-color: #fff;
+  color: #000;
+  margin-bottom: 15px;
+}
+
+.form__text {
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.5s linear;
+}
+
+.form__text:hover {
+  opacity: 0.7;
+}
