@@ -29,93 +29,24 @@ export const login = (email, password) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      console.log('auth register', data);
       if (data) {
-        localStorage.setItem('jwt', data);
+        localStorage.setItem('jwt', data.token);
         return data;
       }
     })
     .catch((err) => console.log(err));
 };
 
-// class Auth {
-//   constructor({ baseUrl, headers }) {
-//     this._baseUrl = baseUrl;
-//     this._headers = headers;
-//   }
-
-//   checkToken() {
-//     return fetch(this._baseUrl + 'users/me', {
-//       method: 'GET',
-//       headers: {
-//         Authorization: `Bearer ${localStorage.getItem('token')}`,
-//       },
-//     });
-//     // .then((res) => {
-//     //   if (res.ok) {
-//     //     return res.json();
-//     //   } else {
-//     //     return Promise.reject('Error! ' + res.statusText);
-//     //   }
-//     // });
-//   }
-
-//   // POST https://around.nomoreparties.co/signup
-//   register(email, password) {
-//     return fetch(this._baseUrl + '/signup', {
-//       headers: this._headers,
-//       method: 'POST',
-//       body: JSON.stringify({ email, password }),
-//     }).then((res) => {
-//       if (res.ok) {
-//         return res.json();
-//       } else {
-//         return Promise.reject('Error! ' + res.statusText);
-//       }
-//     });
-// .then((data) => {
-//   return fetch(this._baseUrl + '/signin', {
-//     headers: this._headers,
-//     method: 'POST',
-//     body: JSON.stringify({ email, password }),
-//   })
-//     .then((res) => {
-//       if (res.ok) {
-//         return res.json();
-//       } else {
-//         return Promise.reject('Error! ' + res.statusText);
-//       }
-//     })
-//     .then((res) => {
-//       localStorage.setItem('jwt', res.token);
-//       return data;
-//     });
-// });
-// }
-
-// POST https://around.nomoreparties.co/signup
-//   login(data) {
-//     return fetch(this._baseUrl + '/signin', {
-//       headers: this._headers,
-//       method: 'POST',
-//       body: JSON.stringify(data),
-//     })
-//       .then((res) => {
-//         if (res.ok) {
-//           return res.json();
-//         } else {
-//           return Promise.reject('Error! ' + res.statusText);
-//         }
-//       })
-//       .then((data) => {
-//         localStorage.setItem('jwt', data.token);
-//       });
-//   }
-// }
-
-// export default new Auth({
-//   baseUrl: 'https://register.nomoreparties.co',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-// });
+export const checkToken = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+};

@@ -6,6 +6,7 @@ import AroundTheUs from './AroundTheUs';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
+import * as auth from '../utils/auth';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,24 @@ class App extends React.Component {
       loggedIn: false,
     };
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleTokenCheck = this.handleTokenCheck.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleTokenCheck();
+  }
+
+  handleTokenCheck() {
+    if (localStorage.getItem('jwt')) {
+      const jwt = localStorage.getItem('jwt');
+      auth.checkToken(jwt).then((res) => {
+        if (res) {
+          this.setState({
+            loggedIn: true,
+          });
+        }
+      });
+    }
   }
 
   handleLogin() {

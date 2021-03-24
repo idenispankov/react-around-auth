@@ -29,11 +29,11 @@ class Login extends React.Component {
     auth
       .login(this.state.email, this.state.password)
       .then((data) => {
-        console.log(data);
-        if (data) {
+        console.log('Login', data);
+        if (data.token) {
           this.setState({ username: '', password: '' }, () => {
-            this.props.handleLogin(data.jwt);
-            this.props.history.push('/about');
+            this.props.handleLogin(data.token);
+            this.props.history.push('/around');
           });
         }
       })
