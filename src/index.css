@@ -63,6 +63,8 @@
 }
 
 .form__text {
+  display: block;
+  margin-bottom: 50px;
   text-decoration: none;
   color: #fff;
   cursor: pointer;
