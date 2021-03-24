@@ -15,6 +15,7 @@ class App extends React.Component {
       loggedIn: false,
     };
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.handleTokenCheck = this.handleTokenCheck.bind(this);
   }
 
@@ -46,11 +47,18 @@ class App extends React.Component {
     });
   }
 
+  handleLogout = () => {
+    localStorage.removeItem('jwt');
+    this.setState({
+      loggedIn: false,
+    });
+  };
+
   render() {
     return (
       <div className='page'>
         <div className='page__container'>
-          <Header />
+          <Header handleLogout={this.handleLogout} />
           <Switch>
             <ProtectedRoute
               path='/around'
