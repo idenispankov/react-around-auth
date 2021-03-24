@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import AroundTheUs from './AroundTheUs';
@@ -27,9 +27,14 @@ class App extends React.Component {
       const jwt = localStorage.getItem('jwt');
       auth.checkToken(jwt).then((res) => {
         if (res) {
-          this.setState({
-            loggedIn: true,
-          });
+          this.setState(
+            {
+              loggedIn: true,
+            },
+            () => {
+              this.props.history.push('/around');
+            }
+          );
         }
       });
     }
@@ -76,4 +81,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
