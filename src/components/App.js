@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-// import { CurrentUserContext } from '../context/CurrentUserContext';
 import AroundTheUs from './AroundTheUs';
 import Login from './Login';
 import Register from './Register';
@@ -14,6 +13,13 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
     };
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  handleLogin() {
+    this.setState({
+      loggedIn: true,
+    });
   }
 
   render() {
@@ -29,7 +35,7 @@ class App extends React.Component {
             />
 
             <Route path='/signin'>
-              <Login />
+              <Login handleLogin={this.handleLogin} />
             </Route>
 
             <Route path='/signup'>

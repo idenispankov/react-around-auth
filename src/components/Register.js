@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Input from './Input';
+import * as auth from '../utils/auth';
 
 class Register extends React.Component {
   constructor(props) {
@@ -22,11 +23,16 @@ class Register extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    auth.register(this.state.email, this.state.password).then((res) => {
+      if (res.statusCode !== 400) {
+        this.props.history.push('/signin');
+      }
+    });
   }
 
   render() {
     return (
-      <form className='form form__autorization'>
+      <form className='form form__autorization' onSubmit={this.handleSubmit}>
         <h2 className='form__title form__title-autorization'>Sign up</h2>
         <Input
           name='email'
@@ -47,7 +53,6 @@ class Register extends React.Component {
         <button
           className='form__button form__button_autorization'
           type='submit'
-          onClick={this.handleSubmit}
         >
           Sign up
         </button>
@@ -59,4 +64,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default withRouter(Register);
