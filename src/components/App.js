@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import AroundTheUs from './AroundTheUs';
@@ -8,66 +8,52 @@ import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
 import * as auth from '../utils/auth';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+const App = () => {
+  const history = useHistory();
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  function handleLogin() {
+    setLoggedIn(true);
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('jwt');
+    this.setState({
       loggedIn: false,
-    };
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.handleTokenCheck = this.handleTokenCheck.bind(this);
+    });
   }
 
-  componentDidMount() {
-    this.handleTokenCheck();
-  }
-
-  handleTokenCheck() {
+  function handleTokenCheck() {
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt');
       auth.checkToken(jwt).then((res) => {
         if (res) {
-          this.setState(
-            {
-              loggedIn: true,
-            },
-            () => {
-              this.props.history.push('/around');
-            }
-          );
+          setLoggedIn(true);
+          history.push('around');
         }
       });
     }
   }
 
-  handleLogin() {
-    this.setState({
-      loggedIn: true,
-    });
-  }
+  useEffect(() => {
+    handleTokenCheck();
+  });
 
-  handleLogout = () => {
-    localStorage.removeItem('jwt');
-    this.setState({
-      loggedIn: false,
-    });
-  };
-
-  render() {
-    return (
+  return (
+    <div>
       <div className='page'>
         <div className='page__container'>
-          <Header handleLogout={this.handleLogout} />
+          <Header handleLogout={handleLogout} />
           <Switch>
             <ProtectedRoute
               path='/around'
-              loggedIn={this.state.loggedIn}
+              loggedIn={loggedIn}
               component={AroundTheUs}
             />
 
             <Route path='/signin'>
-              <Login handleLogin={this.handleLogin} />
+              <Login handleLogin={handleLogin} />
             </Route>
 
             <Route path='/signup'>
@@ -75,18 +61,15 @@ class App extends React.Component {
             </Route>
 
             <Route path='/'>
-              {this.state.loggedIn ? (
-                <Redirect to='/around' />
-              ) : (
-                <Redirect to='/signin' />
-              )}
+              {loggedIn ? <Redirect to='/around' /> : <Redirect to='/signin' />}
             </Route>
           </Switch>
+
           <Footer />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-export default withRouter(App);
+export default App;
