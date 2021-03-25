@@ -14,6 +14,7 @@ import AddPlacePopup from '../components/AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
 import Register from './Register';
 import Login from './Login';
+import ProtectedRoute from './ProtectedRoute';
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -167,7 +168,7 @@ export default function App() {
             <Route path='/signin'>
               <Login />
             </Route>
-            <Route path='/'>
+            <ProtectedRoute path='/'>
               <Header
                 loggedIn={loggedIn}
                 email='some@gmail.com'
@@ -184,6 +185,10 @@ export default function App() {
                 onDeleteCard={handleCardDelete}
                 onLikeClick={handleCardLike}
               />
+            </ProtectedRoute>
+
+            <Route exact path='/'>
+              {loggedIn ? <Redirect to='/' /> : <Redirect to='/signin' />}
             </Route>
           </Switch>
           <Footer footerText='&copy; 2020 Around The U.S.' />
