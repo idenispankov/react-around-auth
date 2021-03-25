@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import logo from '../images/header__logo.svg';
+import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
 import '../index.css';
 import Header from './Header';
 import Main from './Main';
@@ -12,8 +12,13 @@ import EditProfilePopup from '../components/EditProfilePopup';
 import EditAvatarPopup from '../components/EditAvatarPopup';
 import AddPlacePopup from '../components/AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
+import Register from './Register';
+import Login from './Login';
 
 export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  // const [email, setEmail] = useState('');
+
   const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -147,23 +152,40 @@ export default function App() {
       .catch((err) => console.log(err));
   }, []);
 
+  function handleLogout() {
+    console.log('Logged Out!');
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <div className='page__container'>
-          <Header logo={logo} />
+          <Switch>
+            <Route path='/signup'>
+              <Register />
+            </Route>
+            <Route path='/signin'>
+              <Login />
+            </Route>
+            <Route path='/'>
+              <Header
+                loggedIn={loggedIn}
+                email='some@gmail.com'
+                onLogout={handleLogout}
+              />
 
-          <Main
-            onEditAvatar={handleEditAvatarClick}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onDeleteClick={handleDeleteCardClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onDeleteCard={handleCardDelete}
-            onLikeClick={handleCardLike}
-          />
-
+              <Main
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onDeleteClick={handleDeleteCardClick}
+                onCardClick={handleCardClick}
+                cards={cards}
+                onDeleteCard={handleCardDelete}
+                onLikeClick={handleCardLike}
+              />
+            </Route>
+          </Switch>
           <Footer footerText='&copy; 2020 Around The U.S.' />
         </div>
 

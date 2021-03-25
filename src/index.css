@@ -10,9 +10,89 @@
 @import url(./blocks/modal/_is-open/modal_is-open.css);
 @import url(./blocks/form/form.css);
 
-/* Form */
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__menu {
+  display: flex;
+}
+
+.header__button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+}
+
+.header__email {
+  color: #fff;
+  margin: 0;
+  margin-right: 24px;
+}
+
+.header__link {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: #fff;
+  transition: opacity 0.5s linear;
+}
+
+.header__link:hover {
+  opacity: 0.7;
+}
+
 .form__autorization {
-  /* border: 1px solid red; */
+  background-color: #000;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+  width: 358px;
+}
+
+.form__title-autorization {
+  color: #fff;
+  margin: 20px 0 50px;
+}
+
+.form__input_autorization {
+  background-color: #000;
+  border-bottom: 2px solid #fff;
+  margin: 0 0 30px;
+  color: #fff;
+  outline: none;
+}
+
+.form__input_autorization:last-of-type {
+  margin-bottom: 216px;
+}
+
+.form__button_autorization {
+  border: none;
+  background-color: #fff;
+  color: #000;
+  margin-bottom: 15px;
+}
+
+.form__text {
+  display: block;
+  margin-bottom: 50px;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.5s linear;
+}
+
+.form__text:hover {
+  opacity: 0.7;
+}
+
+/* .form__autorization {
   background-color: #000;
   margin: 0 auto;
   text-align: center;
@@ -56,9 +136,8 @@
   opacity: 0.7;
 }
 
-/* Header */
+
 .header__links {
-  /* border: 1px solid red; */
   padding: 0;
   margin: 0;
 }
@@ -83,4 +162,4 @@
 
 .header__link-button:hover {
   opacity: 0.7;
-}
+} */
