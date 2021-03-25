@@ -1,5 +1,4 @@
 // import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import logo from '../images/header__logo.svg';
 
 export default function Header({ handleLogout, loggedIn }) {
@@ -13,9 +12,9 @@ export default function Header({ handleLogout, loggedIn }) {
     <header className='header'>
       <img className='header__logo' src={logo} alt='Around US logo' />
       <ul className='header__links'>
-        <NavLink to='/signin' className='header__link'>
+        <button className='header__link-button' onClick={handleLogout}>
           Log out
-        </NavLink>
+        </button>
       </ul>
     </header>
   );
