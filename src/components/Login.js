@@ -33,7 +33,7 @@ const Login = ({ handleLogin }) => {
             </li>
           </ul>
         </header>
-        <form className='form form__autorization' onSubmit={handleSubmit}>
+        <form className='form__autorization' onSubmit={handleSubmit}>
           <h2 className='form__title form__title-autorization'>Log in</h2>
           <Input
             name='email'

@@ -33,7 +33,7 @@ const Register = ({ handleRegister }) => {
             </li>
           </ul>
         </header>
-        <form className='form form__autorization' onSubmit={handleSubmit}>
+        <form className='form__autorization' onSubmit={handleSubmit}>
           <h2 className='form__title form__title-autorization'>Sign up</h2>
           <Input
             name='email'

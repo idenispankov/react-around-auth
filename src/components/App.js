@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
+
+import { CurrentUserContext } from '../context/CurrentUserContext';
+import api from '../utils/api';
+import * as auth from '../utils/auth';
 import '../index.css';
+
+import avatar from '../images/avatar_type_dark.jpg';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
-import api from '../utils/api';
-import { CurrentUserContext } from '../context/CurrentUserContext';
-import avatar from '../images/avatar_type_dark.jpg';
 import EditProfilePopup from '../components/EditProfilePopup';
 import EditAvatarPopup from '../components/EditAvatarPopup';
 import AddPlacePopup from '../components/AddPlacePopup';
@@ -16,14 +19,12 @@ import Register from './Register';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip';
-import * as auth from '../utils/auth';
 
-export default function App(props) {
+export default function App() {
   const history = useHistory();
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const [isToolTipOpen, setIsToolTipOpen] = useState(false);
   const [registered, setIsregestered] = useState(false);
 
@@ -160,12 +161,11 @@ export default function App(props) {
       .catch((err) => console.log(err));
   }, []);
 
-  // Login, Logout
+  // REGISTARTION, LOG IN, LOG OUT, TOKEN CHECK
   function handleRegister(email, password) {
     auth
       .register(email, password)
       .then((res) => {
-        console.log(res);
         if (res.data) {
           setEmail(email);
           setIsregestered(true);
@@ -226,9 +226,6 @@ export default function App(props) {
       <div className='page'>
         <div className='page__container'>
           <Switch>
-            <Route path='/tip'>
-              <InfoTooltip />
-            </Route>
             <Route path='/signup'>
               <Register
                 handleTooltip={handleTooltip}
@@ -257,7 +254,7 @@ export default function App(props) {
               />
             </ProtectedRoute>
 
-            <Route exact path='/'>
+            <Route path='/'>
               {loggedIn ? <Redirect to='/' /> : <Redirect to='/signin' />}
             </Route>
           </Switch>

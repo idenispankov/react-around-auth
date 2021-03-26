@@ -11,7 +11,7 @@ export default function Input(props) {
         maxLength={props.max}
         onChange={props.handleChange}
         value={props.value}
-        // autoComplete='off'
+        autoComplete='off'
         required
       />
 
