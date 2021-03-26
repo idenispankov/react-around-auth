@@ -10,6 +10,7 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
+  outline: none;
 }
 
 .form__input:last-child {

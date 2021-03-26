@@ -14,8 +14,6 @@ export default function Input(props) {
         autoComplete='off'
         required
       />
-
-      <span id={props.errorType} className='form__error'></span>
     </>
   );
 }
