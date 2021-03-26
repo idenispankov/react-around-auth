@@ -9,12 +9,8 @@ export const register = (email, password) => {
     },
     body: JSON.stringify({ email, password }),
   })
-    .then((response) => {
-      return response.json();
-    })
-    .then((res) => {
-      return res;
-    })
+    .then((res) => res.json())
+    .then((data) => data)
     .catch((err) => console.log(err));
 };
 
@@ -27,7 +23,7 @@ export const login = (email, password) => {
     },
     body: JSON.stringify({ email, password }),
   })
-    .then((response) => response.json())
+    .then((res) => res.json())
     .then((data) => {
       if (data) {
         localStorage.setItem('jwt', data.token);

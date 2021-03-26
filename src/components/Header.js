@@ -1,6 +1,6 @@
 import logo from '../images/header__logo.svg';
 
-export default function Header({ loggedIn, onLogout, email, text }) {
+export default function Header({ loggedIn, onLogout, email }) {
   return (
     <header className='header'>
       <img className='header__logo' src={logo} alt='Around US logo' />

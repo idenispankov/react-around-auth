@@ -15,10 +15,14 @@ import DeleteCardPopup from './DeleteCardPopup';
 import Register from './Register';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from './InfoTooltip';
+import * as auth from '../utils/auth';
 
 export default function App() {
+  const history = useHistory();
+
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
 
   const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
@@ -153,26 +157,50 @@ export default function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  function handleLogout() {
-    console.log('Logged Out!');
+  // Login, Logout
+
+  function handleLogin(email) {
+    setLoggedIn(true);
   }
+
+  function handleLogout() {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    setEmail('');
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.checkToken(token).then((res) => {
+        if (res) {
+          setEmail(res.data.email);
+          setLoggedIn(true);
+          history.push('/');
+        }
+      });
+    }
+  }, [history]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <div className='page__container'>
           <Switch>
+            <Route path='/tip'>
+              <InfoTooltip />
+            </Route>
             <Route path='/signup'>
               <Register />
             </Route>
             <Route path='/signin'>
-              <Login />
+              <Login handleLogin={handleLogin} loggedIn={loggedIn} />
             </Route>
-            <ProtectedRoute path='/'>
+            <ProtectedRoute path='/' loggedIn={loggedIn}>
               <Header
                 loggedIn={loggedIn}
-                email='some@gmail.com'
                 onLogout={handleLogout}
+                email={email}
               />
 
               <Main
