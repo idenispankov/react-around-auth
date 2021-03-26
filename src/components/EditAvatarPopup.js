@@ -1,6 +1,6 @@
 import PopupWithForm from './PopupWithForm';
 import Input from './Input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function EditProfilePopup(props) {
   const [avatar, setAvatar] = useState('');
@@ -16,6 +16,10 @@ export default function EditProfilePopup(props) {
     });
     props.setSubmitStatus(true);
   }
+
+  useEffect(() => {
+    setAvatar('');
+  }, [props.isOpen]);
 
   return (
     <PopupWithForm

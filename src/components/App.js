@@ -69,7 +69,7 @@ export default function App() {
     setEventListener(true);
   }
 
-  function closeAllPopups(e) {
+  function closeAllPopups() {
     setIsAvatarPopupOpen(false);
     setIsProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
