@@ -47,7 +47,6 @@ export default function Main({
             <Card
               card={card}
               key={card._id}
-              currentUserId={currentUser._id}
               onCardClick={onCardClick}
               onCardLike={onLikeClick}
               onCardDelete={onDeleteClick}

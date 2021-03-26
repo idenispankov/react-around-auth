@@ -1,12 +1,9 @@
 import PopupWithForm from './PopupWithForm';
 import Input from './Input';
-import { CurrentUserContext } from '../context/CurrentUserContext';
-import { useContext, useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function EditProfilePopup(props) {
   const [avatar, setAvatar] = useState('');
-
-  const currentUser = useContext(CurrentUserContext);
 
   function handleChange(e) {
     setAvatar(e.target.value);
@@ -19,10 +16,6 @@ export default function EditProfilePopup(props) {
     });
     props.setSubmitStatus(true);
   }
-
-  useEffect(() => {
-    setAvatar(currentUser.avatar);
-  }, [currentUser]);
 
   return (
     <PopupWithForm
