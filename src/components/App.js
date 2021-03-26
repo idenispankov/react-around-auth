@@ -45,6 +45,7 @@ export default function App() {
 
   function handleEditAvatarClick() {
     setIsAvatarPopupOpen(true);
+    setEventListener(true);
   }
 
   function handleEditProfileClick() {
