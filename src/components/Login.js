@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { NavLink, Link, useHistory } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import logo from '../images/header__logo.svg';
 import Input from './Input';
-import * as auth from '../utils/auth';
 
 const Login = ({ handleLogin }) => {
-  const history = useHistory();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,15 +17,7 @@ const Login = ({ handleLogin }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth
-      .login(email, password)
-      .then((data) => {
-        if (data.token) {
-          handleLogin();
-          history.push('/');
-        }
-      })
-      .catch((err) => console.log(err));
+    handleLogin(email, password);
   }
 
   return (

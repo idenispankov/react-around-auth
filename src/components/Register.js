@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, Link, useHistory } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import logo from '../images/header__logo.svg';
 import Input from './Input';
 

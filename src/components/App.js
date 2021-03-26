@@ -168,10 +168,9 @@ export default function App(props) {
         console.log(res);
         if (res.data) {
           setEmail(email);
-          // setPassword(password);
           setIsregestered(true);
           handleTooltip();
-          history.push('/');
+          history.push('/signin');
           return;
         }
         setIsregestered(false);
@@ -184,13 +183,25 @@ export default function App(props) {
     setIsToolTipOpen(true);
   }
 
-  function handleLogin() {
+  function handleLogin(email, password) {
+    auth
+      .login(email, password)
+      .then((data) => {
+        if (data.token) {
+          handleLogin();
+          setEmail(email);
+          history.push('/');
+        }
+      })
+      .catch((err) => console.log(err));
     setLoggedIn(true);
+    setEmail(email);
   }
 
   function handleLogout() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
+    setEmail('');
   }
 
   function onClose() {
