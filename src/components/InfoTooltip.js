@@ -12,11 +12,11 @@ const InfoTooltip = (props) => {
       <form className='form form__success'>
         <img
           className='form__image'
-          src={props.isRegistered ? success : error}
+          src={props.registered ? success : error}
           alt='icon'
         />
         <p className='form__text-tooltip'>
-          {props.isRegistered
+          {props.registered
             ? 'Success! You have now been registered.'
             : 'Oops, something went wrong! Please try again.'}
         </p>

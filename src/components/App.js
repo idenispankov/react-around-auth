@@ -23,6 +23,7 @@ export default function App(props) {
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
   const [isToolTipOpen, setIsToolTipOpen] = useState(false);
   const [registered, setIsregestered] = useState(false);
 
@@ -160,8 +161,23 @@ export default function App(props) {
   }, []);
 
   // Login, Logout
-  function handleRegistered() {
-    setIsregestered(true);
+  function handleRegister(email, password) {
+    auth
+      .register(email, password)
+      .then((res) => {
+        console.log(res);
+        if (res.data) {
+          setEmail(email);
+          // setPassword(password);
+          setIsregestered(true);
+          handleTooltip();
+          history.push('/');
+          return;
+        }
+        setIsregestered(false);
+        handleTooltip();
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleTooltip() {
@@ -175,7 +191,6 @@ export default function App(props) {
   function handleLogout() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
-    setEmail('');
   }
 
   function onClose() {
@@ -187,7 +202,7 @@ export default function App(props) {
     if (token) {
       auth.checkToken(token).then((res) => {
         if (res) {
-          // setEmail(res.data.email);
+          setEmail(res.data.email);
           setLoggedIn(true);
           history.push('/');
         }
@@ -204,7 +219,10 @@ export default function App(props) {
               <InfoTooltip />
             </Route>
             <Route path='/signup'>
-              <Register handleTooltip={handleTooltip} />
+              <Register
+                handleTooltip={handleTooltip}
+                handleRegister={handleRegister}
+              />
             </Route>
             <Route path='/signin'>
               <Login handleLogin={handleLogin} loggedIn={loggedIn} />
@@ -271,7 +289,6 @@ export default function App(props) {
           isOpen={isToolTipOpen}
           onClose={onClose}
           registered={registered}
-          handleRegistered={handleRegistered}
         />
       </div>
     </CurrentUserContext.Provider>

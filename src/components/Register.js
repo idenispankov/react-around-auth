@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { NavLink, Link, useHistory } from 'react-router-dom';
 import logo from '../images/header__logo.svg';
 import Input from './Input';
-import * as auth from '../utils/auth';
 
-const Register = (props) => {
-  const history = useHistory();
-
+const Register = ({ handleRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,16 +17,7 @@ const Register = (props) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth
-      .register(email, password)
-      .then((res) => {
-        if (res.statusCode !== 400) {
-          props.handleTooltip();
-          // props.handleRegistered();
-          history.push('/signin');
-        }
-      })
-      .catch((err) => console.log(err));
+    handleRegister(email, password);
   }
 
   return (
