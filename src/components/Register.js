@@ -4,7 +4,7 @@ import logo from '../images/header__logo.svg';
 import Input from './Input';
 import * as auth from '../utils/auth';
 
-const Register = () => {
+const Register = (props) => {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
@@ -20,11 +20,16 @@ const Register = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth.register(email, password).then((res) => {
-      if (res.statusCode !== 400) {
-        history.push('/signin');
-      }
-    });
+    auth
+      .register(email, password)
+      .then((res) => {
+        if (res.statusCode !== 400) {
+          props.handleTooltip();
+          // props.handleRegistered();
+          history.push('/signin');
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   return (

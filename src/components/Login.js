@@ -24,8 +24,6 @@ const Login = ({ handleLogin }) => {
       .login(email, password)
       .then((data) => {
         if (data.token) {
-          // setEmail('');
-          // setPassword('');
           handleLogin();
           history.push('/');
         }
