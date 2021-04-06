@@ -167,6 +167,7 @@ export default function App() {
     auth
       .register(email, password)
       .then((res) => {
+        console.log(res.data);
         if (res.data) {
           setEmail(email);
           setIsregestered(true);

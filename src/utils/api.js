@@ -106,7 +106,7 @@ class Api {
 }
 
 export default new Api({
-  baseUrl: 'https://around.nomoreparties.co/v1/group-6',
+  baseUrl: 'http://denis.students.nomoreparties.site',
   headers: {
     authorization: '7de1d63b-0ba0-4390-89a7-2fe6bdf9eada',
     'Content-Type': 'application/json',
