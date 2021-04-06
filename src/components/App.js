@@ -37,6 +37,8 @@ export default function App() {
   const [deleteCard, setDeleteCard] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({
+    _id: '',
+    email: '',
     name: '',
     about: '',
     avatar: avatar,
@@ -157,6 +159,7 @@ export default function App() {
       .then((data) => {
         const [user, cardsList] = data;
         setCurrentUser(user);
+        console.log(user, 'data from useEffect get all info');
         setCards(cardsList);
       })
       .catch((err) => console.log(err));
@@ -171,7 +174,6 @@ export default function App() {
         if (!res.email) {
           setIsregestered(false);
           handleTooltip();
-          return;
         }
         setEmail(res.email);
         setIsregestered(true);
@@ -189,15 +191,18 @@ export default function App() {
     auth
       .login(email, password)
       .then((data) => {
-        if (data.token) {
-          handleLogin();
-          setEmail(email);
-          history.push('/');
+        if (!data) {
+          setLoggedIn(false);
+          setEmail('');
+          history.push('/signup');
         }
+        console.log(data, 'data handleLogin exist');
+        localStorage.setItem('jwt', data);
+        setLoggedIn(true);
+        setEmail(email);
+        history.push('/');
       })
       .catch((err) => console.log(err));
-    setLoggedIn(true);
-    setEmail(email);
   }
 
   function handleLogout() {
@@ -213,9 +218,11 @@ export default function App() {
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
+      console.log(token, 'token from useEffect 220');
       auth.checkToken(token).then((res) => {
         if (res) {
-          setEmail(res.data.email);
+          console.log(res, 'res from useEffect');
+          setEmail(res.email);
           setLoggedIn(true);
           history.push('/');
         }

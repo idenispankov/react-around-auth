@@ -24,12 +24,7 @@ export const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => res.json())
-    .then((data) => {
-      if (data) {
-        localStorage.setItem('jwt', data.token);
-        return data;
-      }
-    })
+    .then((data) => data)
     .catch((err) => console.log(err));
 };
 
@@ -43,5 +38,6 @@ export const checkToken = (token) => {
     },
   })
     .then((res) => res.json())
+    .then((res) => res)
     .then((data) => data);
 };
