@@ -167,16 +167,16 @@ export default function App() {
     auth
       .register(email, password)
       .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-          setEmail(email);
-          setIsregestered(true);
+        console.log(res);
+        if (!res.email) {
+          setIsregestered(false);
           handleTooltip();
-          history.push('/signin');
           return;
         }
-        setIsregestered(false);
+        setEmail(res.email);
+        setIsregestered(true);
         handleTooltip();
+        history.push('/signin');
       })
       .catch((err) => console.log(err));
   }
