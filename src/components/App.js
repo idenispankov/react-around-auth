@@ -181,7 +181,7 @@ export default function App() {
   //   Promise.all([api.getUserInfo(), api.getCardList({})])
   //     .then((data) => {
   //       console.log(data, 'DATA');
-  //       const token = localStorage.getItem('jwt');
+  //       const token = localStorage.getItem('token');
   //       console.log(token);
   //       const [user, cardsList] = data;
   //       setCurrentUser(user);
@@ -220,7 +220,7 @@ export default function App() {
       .login(email, password)
       .then((data) => {
         if (data.token) {
-          setToken(data.token);
+          localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           setEmail(email);
           history.push('/');
@@ -236,39 +236,49 @@ export default function App() {
   function handleLogout() {
     setToken(localStorage.removeItem('jwt'));
     setLoggedIn(false);
-    setEmail('');
+    setCurrentUser(currentUser);
   }
 
   function onClose() {
     setIsToolTipOpen(false);
   }
 
-  useEffect(() => {
-    if (token) {
-      auth.checkToken(token).then((res) => {
-        if (res) {
-          setCurrentUser(res);
-          setLoggedIn(true);
-          history.push('/');
-          console.log('OK!!!!!!');
-        }
-      });
-    }
-  }, [history, token]);
-
   // useEffect(() => {
   //   if (token) {
-  //     console.log(token, 'res useEffect');
-  //     auth.checkToken(token).then((res) => {
-  //       console.log(res, 'RES');
-  //       if (res) {
-  //         setEmail(res.email);
-  //         setLoggedIn(true);
-  //         history.push('/');
-  //       }
-  //     });
+  //     auth
+  //       .checkToken(token)
+  //       .then((res) => {
+  //         setCurrentUser(res);
+  //       })
+  //       .then(() => {
+  //         api.getCardList().then((res) => {
+  //           setCards(res);
+  //           console.log(res);
+  //         });
+  //       })
+  //       .catch((err) => console.log(err));
   //   }
-  // }, [history]);
+  // }, [token]);
+
+  useEffect(() => {
+    if (token) {
+      auth
+        .checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            setCurrentUser(res);
+            history.push('/');
+          }
+        })
+        .then(() => {
+          api.getCardList().then((res) => {
+            setCards(res);
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [history, token]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
