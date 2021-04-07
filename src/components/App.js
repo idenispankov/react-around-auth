@@ -160,37 +160,6 @@ export default function App() {
     // }
   }
 
-  // useEffect(() => {
-  //   if (token) {
-  //     auth
-  //       .checkToken(token)
-  //       .then((res) => {
-  //         setCurrentUser(res);
-  //       })
-  //       .then(() => {
-  //         api.getCardList().then((res) => {
-  //           setCards(res);
-  //           console.log(res);
-  //         });
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [token]);
-
-  // useEffect(() => {
-  //   Promise.all([api.getUserInfo(), api.getCardList({})])
-  //     .then((data) => {
-  //       console.log(data, 'DATA');
-  //       const token = localStorage.getItem('token');
-  //       console.log(token);
-  //       const [user, cardsList] = data;
-  //       setCurrentUser(user);
-  //       setCards(cardsList);
-  //       console.log(cardsList, 'CardsList');
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   // REGISTARTION, LOG IN, LOG OUT, TOKEN CHECK
   function handleRegister(email, password) {
     auth
@@ -243,23 +212,6 @@ export default function App() {
     setIsToolTipOpen(false);
   }
 
-  // useEffect(() => {
-  //   if (token) {
-  //     auth
-  //       .checkToken(token)
-  //       .then((res) => {
-  //         setCurrentUser(res);
-  //       })
-  //       .then(() => {
-  //         api.getCardList().then((res) => {
-  //           setCards(res);
-  //           console.log(res);
-  //         });
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [token]);
-
   useEffect(() => {
     if (token) {
       auth
@@ -268,6 +220,7 @@ export default function App() {
           if (res) {
             setLoggedIn(true);
             setCurrentUser(res);
+            setEmail(res.email);
             history.push('/');
           }
         })
