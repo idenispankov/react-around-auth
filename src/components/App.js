@@ -43,6 +43,7 @@ export default function App() {
     about: '',
     avatar: avatar,
   });
+
   const [cards, setCards] = useState([]);
 
   function handleEditAvatarClick() {
@@ -155,15 +156,29 @@ export default function App() {
   }
 
   useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getCardList({})])
-      .then((data) => {
-        const [user, cardsList] = data;
-        setCurrentUser(user);
-        console.log(user, 'data from useEffect get all info');
-        setCards(cardsList);
-      })
-      .catch((err) => console.log(err));
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.checkToken(token).then((res) => {
+        // const [user, cardsList] = res;
+        console.log(res);
+        setCurrentUser(res);
+        // setCards(cardsList);
+      });
+    }
   }, []);
+
+  // useEffect(() => {
+  //   Promise.all([api.getUserInfo(), api.getCardList({})])
+  //     .then((data) => {
+  //       console.log(data);
+  //       const token = localStorage.getItem('jwt');
+  //       console.log(token);
+  //       const [user, cardsList] = data;
+  //       setCurrentUser(user);
+  //       setCards(cardsList);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   // REGISTARTION, LOG IN, LOG OUT, TOKEN CHECK
   function handleRegister(email, password) {
@@ -220,12 +235,11 @@ export default function App() {
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      console.log(token, 'token from useEffect 220');
       auth.checkToken(token).then((res) => {
         if (res) {
-          console.log(res, 'res from useEffect');
           setEmail(res.email);
           setLoggedIn(true);
+          console.log(res);
           history.push('/');
         }
       });

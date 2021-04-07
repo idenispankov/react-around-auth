@@ -9,6 +9,7 @@ class Api {
     return fetch(this._baseUrl + '/cards', {
       headers: this._headers,
     }).then((res) => {
+      console.log(res, 'getCardList res!!!');
       if (res.ok) {
         return res.json();
       } else {
@@ -108,7 +109,7 @@ class Api {
 export default new Api({
   baseUrl: 'http://localhost:3000',
   headers: {
-    authorization: '7de1d63b-0ba0-4390-89a7-2fe6bdf9eada',
+    // authorization: '7de1d63b-0ba0-4390-89a7-2fe6bdf9eada',
     'Content-Type': 'application/json',
   },
 });
