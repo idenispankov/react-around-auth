@@ -175,7 +175,7 @@ export default function App() {
         })
         .catch((err) => console.log(err));
     }
-  }, []);
+  }, [token]);
 
   // useEffect(() => {
   //   Promise.all([api.getUserInfo(), api.getCardList({})])
@@ -254,7 +254,7 @@ export default function App() {
         }
       });
     }
-  }, [history]);
+  }, [history, token]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

@@ -68,9 +68,7 @@ class Api {
       body: JSON.stringify(data),
     }).then((res) => {
       if (res.ok) {
-        // console.log(res, 'res from addCard!');
-        // return res.json();
-        return res;
+        return res.json();
       } else {
         return Promise.reject('Error! ' + res.statusText);
       }
