@@ -167,7 +167,10 @@ export default function App() {
           // setCards(cardsList);
         })
         .then(() => {
-          api.getCardList().then((res) => console.log(res, 'RES!!!!'));
+          api.getCardList().then((res) => {
+            setCards(res);
+            console.log(res);
+          });
         });
     }
   }, []);
