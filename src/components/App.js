@@ -158,24 +158,30 @@ export default function App() {
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      auth.checkToken(token).then((res) => {
-        // const [user, cardsList] = res;
-        console.log(res);
-        setCurrentUser(res);
-        // setCards(cardsList);
-      });
+      auth
+        .checkToken(token)
+        .then((res) => {
+          // const [user, cardsList] = res;
+          console.log(res);
+          setCurrentUser(res);
+          // setCards(cardsList);
+        })
+        .then(() => {
+          api.getCardList().then((res) => console.log(res, 'RES!!!!'));
+        });
     }
   }, []);
 
   // useEffect(() => {
   //   Promise.all([api.getUserInfo(), api.getCardList({})])
   //     .then((data) => {
-  //       console.log(data);
+  //       console.log(data, 'DATA');
   //       const token = localStorage.getItem('jwt');
   //       console.log(token);
   //       const [user, cardsList] = data;
   //       setCurrentUser(user);
   //       setCards(cardsList);
+  //       console.log(cardsList, 'CardsList');
   //     })
   //     .catch((err) => console.log(err));
   // }, []);
@@ -239,7 +245,6 @@ export default function App() {
         if (res) {
           setEmail(res.email);
           setLoggedIn(true);
-          console.log(res);
           history.push('/');
         }
       });

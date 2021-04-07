@@ -18,6 +18,17 @@ class Api {
     });
   }
 
+  // const token = localStorage.getItem('jwt');
+  //   if (token) {
+  //     auth
+  //       .checkToken(token)
+  //       .then((res) => {
+  //         // const [user, cardsList] = res;
+  //         console.log(res);
+  //         setCurrentUser(res);
+  //         // setCards(cardsList);
+  //       })
+
   // GET https://around.nomoreparties.co/v1/groupId/users/me
   getUserInfo() {
     return fetch(this._baseUrl + '/users/me', {
@@ -109,7 +120,7 @@ class Api {
 export default new Api({
   baseUrl: 'http://localhost:3000',
   headers: {
-    // authorization: '7de1d63b-0ba0-4390-89a7-2fe6bdf9eada',
+    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
   },
 });
