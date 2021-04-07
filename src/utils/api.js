@@ -38,7 +38,6 @@ class Api {
       method: 'PATCH',
       body: JSON.stringify(data),
     }).then((res) => {
-      console.log(res, 'res');
       if (res.ok) {
         return res.json();
       } else {
@@ -71,7 +70,7 @@ class Api {
     }).then((res) => {
       if (res.ok) {
         console.log(res, 'res');
-        return console.log(res.json(), 'res.json logging');
+        return res.json();
       } else {
         return Promise.reject('Error! ' + res.statusText);
       }
@@ -93,6 +92,7 @@ class Api {
   }
 
   updateLikes(cardId, liked) {
+    console.log(cardId, liked, 'likes');
     let method = 'DELETE';
     if (liked) method = 'PUT';
     return fetch(this._baseUrl + '/cards/likes/' + cardId, {

@@ -126,6 +126,7 @@ export default function App() {
   }
 
   function handleAddPlaceSubmit(cardData) {
+    console.log(cardData, 'cardData');
     if (token) {
       api
         .addCard({ name: cardData.name, link: cardData.link })
@@ -140,6 +141,7 @@ export default function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    console.log(card._id, 'cardID!!!');
     api
       .updateLikes(card._id, !isLiked)
       .then((newCard) => {
