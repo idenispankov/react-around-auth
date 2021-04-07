@@ -8,10 +8,10 @@ export default function Card({
   onCardDelete,
   currentUserId,
 }) {
-  const currentUser = useContext(CurrentUserContext);
+  // const currentUser = useContext(CurrentUserContext);
 
   const isOwn = card.owner._id === currentUserId;
-  const isLiked = card.likes.some((userId) => userId === currentUserId);
+  const isLiked = card.likes.some((i) => i === currentUserId);
 
   function handleCardClick() {
     onCardClick(card);
