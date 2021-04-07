@@ -108,7 +108,7 @@ class Api {
 export default new Api({
   baseUrl: 'http://localhost:3000',
   headers: {
-    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    // Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
   },
 });

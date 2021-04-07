@@ -106,76 +106,76 @@ export default function App() {
   }
 
   function handleUpdateUser(userData) {
-    api
-      .setUserInfo(userData)
-      .then((user) => {
-        setCurrentUser(user);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
+    // api
+    //   .setUserInfo(userData)
+    //   .then((user) => {
+    //     setCurrentUser(user);
+    //     closeAllPopups();
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   function handleUpdateAvatar(avatarData) {
-    api
-      .setUserAvatar(avatarData)
-      .then((user) => {
-        console.log(user, 'USER!!!');
-        setCurrentUser(user);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
+    // api
+    //   .setUserAvatar(avatarData)
+    //   .then((user) => {
+    //     console.log(user, 'USER!!!');
+    //     setCurrentUser(user);
+    //     closeAllPopups();
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api
-      .updateLikes(card._id, !isLiked)
-      .then((newCard) => {
-        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-        setCards(newCards);
-      })
-      .catch((err) => console.log(err));
+    // const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    // api
+    //   .updateLikes(card._id, !isLiked)
+    //   .then((newCard) => {
+    //     const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+    //     setCards(newCards);
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   function handleCardDelete(card) {
-    api
-      .removeCard(card._id)
-      .then(() => {
-        const newCards = cards.filter((c) => c._id !== card._id);
-        setCards(newCards);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
+    // api
+    //   .removeCard(card._id)
+    //   .then(() => {
+    //     const newCards = cards.filter((c) => c._id !== card._id);
+    //     setCards(newCards);
+    //     closeAllPopups();
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   function handleAddPlaceSubmit(cardData) {
-    if (token) {
-      api
-        .addCard({ name: cardData.name, link: cardData.link })
-        .then((newCard) => {
-          setCards([newCard, ...cards]);
-          closeAllPopups();
-        })
-        .catch((err) => console.log(err));
-    }
+    // if (token) {
+    //   api
+    //     .addCard({ name: cardData.name, link: cardData.link })
+    //     .then((newCard) => {
+    //       setCards([newCard, ...cards]);
+    //       closeAllPopups();
+    //     })
+    //     .catch((err) => console.log(err));
+    // }
   }
 
-  useEffect(() => {
-    if (token) {
-      auth
-        .checkToken(token)
-        .then((res) => {
-          setCurrentUser(res);
-        })
-        .then(() => {
-          api.getCardList().then((res) => {
-            setCards(res);
-            console.log(res);
-          });
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     auth
+  //       .checkToken(token)
+  //       .then((res) => {
+  //         setCurrentUser(res);
+  //       })
+  //       .then(() => {
+  //         api.getCardList().then((res) => {
+  //           setCards(res);
+  //           console.log(res);
+  //         });
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [token]);
 
   // useEffect(() => {
   //   Promise.all([api.getUserInfo(), api.getCardList({})])
@@ -198,11 +198,11 @@ export default function App() {
       .then((res) => {
         if (res.email) {
           setIsregestered(true);
-          setEmail(res.email);
+          setCurrentUser(res);
           handleTooltip();
           history.push('/signin');
         } else if (!res.email) {
-          setEmail('');
+          setCurrentUser(currentUser);
           setIsregestered(false);
           handleTooltip();
           history.push('/signup');
@@ -220,6 +220,7 @@ export default function App() {
       .login(email, password)
       .then((data) => {
         if (data.token) {
+          setToken(data.token);
           setLoggedIn(true);
           setEmail(email);
           history.push('/');
@@ -233,7 +234,7 @@ export default function App() {
   }
 
   function handleLogout() {
-    localStorage.removeItem('jwt');
+    setToken(localStorage.removeItem('jwt'));
     setLoggedIn(false);
     setEmail('');
   }
@@ -243,17 +244,31 @@ export default function App() {
   }
 
   useEffect(() => {
-    // const token = localStorage.getItem('jwt');
     if (token) {
       auth.checkToken(token).then((res) => {
         if (res) {
-          setEmail(res.email);
+          setCurrentUser(res);
           setLoggedIn(true);
           history.push('/');
+          console.log('OK!!!!!!');
         }
       });
     }
   }, [history, token]);
+
+  // useEffect(() => {
+  //   if (token) {
+  //     console.log(token, 'res useEffect');
+  //     auth.checkToken(token).then((res) => {
+  //       console.log(res, 'RES');
+  //       if (res) {
+  //         setEmail(res.email);
+  //         setLoggedIn(true);
+  //         history.push('/');
+  //       }
+  //     });
+  //   }
+  // }, [history]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
