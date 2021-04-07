@@ -106,24 +106,38 @@ export default function App() {
   }
 
   function handleUpdateUser(userData) {
-    // api
-    //   .setUserInfo(userData)
-    //   .then((user) => {
-    //     setCurrentUser(user);
-    //     closeAllPopups();
-    //   })
-    //   .catch((err) => console.log(err));
+    api
+      .setUserInfo(userData)
+      .then((user) => {
+        console.log(user, 'setUserInfo');
+        setCurrentUser(user);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleUpdateAvatar(avatarData) {
-    // api
-    //   .setUserAvatar(avatarData)
-    //   .then((user) => {
-    //     console.log(user, 'USER!!!');
-    //     setCurrentUser(user);
-    //     closeAllPopups();
-    //   })
-    //   .catch((err) => console.log(err));
+    api
+      .setUserAvatar(avatarData)
+      .then((user) => {
+        console.log(user, 'USER!!!');
+        setCurrentUser(user);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleAddPlaceSubmit(cardData) {
+    if (token) {
+      api
+        .addCard({ name: cardData.name, link: cardData.link })
+        .then((newCard) => {
+          console.log(newCard, 'newCard');
+          setCards([newCard, ...cards]);
+          closeAllPopups();
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
   function handleCardLike(card) {
@@ -138,26 +152,14 @@ export default function App() {
   }
 
   function handleCardDelete(card) {
-    // api
-    //   .removeCard(card._id)
-    //   .then(() => {
-    //     const newCards = cards.filter((c) => c._id !== card._id);
-    //     setCards(newCards);
-    //     closeAllPopups();
-    //   })
-    //   .catch((err) => console.log(err));
-  }
-
-  function handleAddPlaceSubmit(cardData) {
-    // if (token) {
-    //   api
-    //     .addCard({ name: cardData.name, link: cardData.link })
-    //     .then((newCard) => {
-    //       setCards([newCard, ...cards]);
-    //       closeAllPopups();
-    //     })
-    //     .catch((err) => console.log(err));
-    // }
+    api
+      .removeCard(card._id)
+      .then(() => {
+        const newCards = cards.filter((c) => c._id !== card._id);
+        setCards(newCards);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
 
   // REGISTARTION, LOG IN, LOG OUT, TOKEN CHECK
