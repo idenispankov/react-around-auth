@@ -23,6 +23,8 @@ import InfoTooltip from './InfoTooltip';
 export default function App() {
   const history = useHistory();
 
+  const [token, setToken] = useState(localStorage.getItem('jwt'));
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [isToolTipOpen, setIsToolTipOpen] = useState(false);
@@ -117,6 +119,7 @@ export default function App() {
     api
       .setUserAvatar(avatarData)
       .then((user) => {
+        console.log(user, 'USER!!!');
         setCurrentUser(user);
         closeAllPopups();
       })
@@ -146,32 +149,31 @@ export default function App() {
   }
 
   function handleAddPlaceSubmit(cardData) {
-    api
-      .addCard({ name: cardData.name, link: cardData.link })
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) => console.log(err));
+    if (token) {
+      api
+        .addCard({ name: cardData.name, link: cardData.link })
+        .then((newCard) => {
+          setCards([newCard, ...cards]);
+          closeAllPopups();
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
     if (token) {
       auth
         .checkToken(token)
         .then((res) => {
-          // const [user, cardsList] = res;
-          console.log(res);
           setCurrentUser(res);
-          // setCards(cardsList);
         })
         .then(() => {
           api.getCardList().then((res) => {
             setCards(res);
             console.log(res);
           });
-        });
+        })
+        .catch((err) => console.log(err));
     }
   }, []);
 
@@ -242,7 +244,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
+    // const token = localStorage.getItem('jwt');
     if (token) {
       auth.checkToken(token).then((res) => {
         if (res) {

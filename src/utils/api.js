@@ -17,17 +17,6 @@ class Api {
     });
   }
 
-  // const token = localStorage.getItem('jwt');
-  //   if (token) {
-  //     auth
-  //       .checkToken(token)
-  //       .then((res) => {
-  //         // const [user, cardsList] = res;
-  //         console.log(res);
-  //         setCurrentUser(res);
-  //         // setCards(cardsList);
-  //       })
-
   // GET https://around.nomoreparties.co/v1/groupId/users/me
   getUserInfo() {
     return fetch(this._baseUrl + '/users/me', {
@@ -79,7 +68,9 @@ class Api {
       body: JSON.stringify(data),
     }).then((res) => {
       if (res.ok) {
-        return res.json();
+        // console.log(res, 'res from addCard!');
+        // return res.json();
+        return res;
       } else {
         return Promise.reject('Error! ' + res.statusText);
       }
