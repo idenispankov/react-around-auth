@@ -170,15 +170,17 @@ export default function App() {
     auth
       .register(email, password)
       .then((res) => {
-        console.log(res);
-        if (!res.email) {
+        if (res.email) {
+          setIsregestered(true);
+          setEmail(res.email);
+          handleTooltip();
+          history.push('/signin');
+        } else if (!res.email) {
+          setEmail('');
           setIsregestered(false);
           handleTooltip();
+          history.push('/signup');
         }
-        setEmail(res.email);
-        setIsregestered(true);
-        handleTooltip();
-        history.push('/signin');
       })
       .catch((err) => console.log(err));
   }
@@ -191,16 +193,16 @@ export default function App() {
     auth
       .login(email, password)
       .then((data) => {
-        if (!data) {
+        if (data.token) {
+          localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+          setEmail(email);
+          history.push('/');
+        } else if (!data.token) {
           setLoggedIn(false);
           setEmail('');
           history.push('/signup');
         }
-        console.log(data, 'data handleLogin exist');
-        localStorage.setItem('jwt', data);
-        setLoggedIn(true);
-        setEmail(email);
-        history.push('/');
       })
       .catch((err) => console.log(err));
   }
