@@ -109,7 +109,6 @@ export default function App() {
     api
       .setUserInfo(userData)
       .then((user) => {
-        console.log(user, 'setUserInfo');
         setCurrentUser(user);
         closeAllPopups();
       })
@@ -120,7 +119,6 @@ export default function App() {
     api
       .setUserAvatar(avatarData)
       .then((user) => {
-        console.log(user, 'USER!!!');
         setCurrentUser(user);
         closeAllPopups();
       })
