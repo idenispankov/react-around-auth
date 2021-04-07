@@ -220,7 +220,6 @@ export default function App() {
       .login(email, password)
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           setEmail(email);
           history.push('/');
