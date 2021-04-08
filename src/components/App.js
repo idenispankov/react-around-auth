@@ -106,6 +106,7 @@ export default function App() {
   }
 
   function handleUpdateUser(userData) {
+    console.log(userData, 'userData');
     api
       .setUserInfo(userData)
       .then((user) => {
@@ -126,13 +127,11 @@ export default function App() {
   }
 
   function handleAddPlaceSubmit(cardData) {
-    console.log(cardData, 'cardData');
     if (token) {
       api
-        .addCard({ name: cardData.name, link: cardData.link })
+        .addCard(cardData)
         .then((newCard) => {
-          console.log(newCard, 'newCard');
-          setCards([newCard, ...cards]);
+          setCards([...cards, newCard]);
           closeAllPopups();
         })
         .catch((err) => console.log(err));
@@ -194,7 +193,6 @@ export default function App() {
           setLoggedIn(true);
           setEmail(email);
           setCurrentUser(currentUser);
-          console.log(currentUser, 'current user on login');
           history.push('/');
         } else if (!data.token) {
           setLoggedIn(false);

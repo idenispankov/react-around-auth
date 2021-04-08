@@ -62,15 +62,14 @@ class Api {
   }
 
   // POST /cards
-  addCard(data) {
+  addCard(data, e) {
     return fetch(this._baseUrl + '/cards', {
-      headers: this._headers,
       method: 'POST',
+      headers: this._headers,
       body: JSON.stringify(data),
     }).then((res) => {
       if (res.ok) {
-        console.log(res, 'res');
-        return res.json;
+        return res.json();
       } else {
         return Promise.reject('Error! ' + res.statusText);
       }
