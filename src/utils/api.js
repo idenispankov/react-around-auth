@@ -92,7 +92,6 @@ class Api {
   }
 
   updateLikes(cardId, liked) {
-    console.log(cardId, liked, 'likes');
     let method = 'DELETE';
     if (liked) method = 'PUT';
     return fetch(this._baseUrl + '/cards/' + cardId + '/likes/', {
