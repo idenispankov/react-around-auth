@@ -106,7 +106,6 @@ export default function App() {
   }
 
   function handleUpdateUser(userData) {
-    console.log(userData, 'userData');
     api
       .setUserInfo(userData)
       .then((user) => {
@@ -160,28 +159,32 @@ export default function App() {
       .catch((err) => console.log(err));
   }
 
+  // ToolTip
+  function handleTooltip() {
+    setIsToolTipOpen(true);
+  }
+
+  function onClose() {
+    setIsToolTipOpen(false);
+  }
+
   // REGISTARTION, LOG IN, LOG OUT, TOKEN CHECK
   function handleRegister(email, password) {
     auth
       .register(email, password)
       .then((res) => {
+        console.log(res, 'register');
         if (res.email) {
           setIsregestered(true);
-          setCurrentUser(res);
           handleTooltip();
           history.push('/signin');
         } else if (!res.email) {
-          setCurrentUser(currentUser);
           setIsregestered(false);
           handleTooltip();
           history.push('/signup');
         }
       })
       .catch((err) => console.log(err));
-  }
-
-  function handleTooltip() {
-    setIsToolTipOpen(true);
   }
 
   function handleLogin(email, password) {
@@ -192,12 +195,18 @@ export default function App() {
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           setEmail(email);
-          setCurrentUser(currentUser);
           history.push('/');
-        } else if (!data.token) {
-          setLoggedIn(false);
-          setEmail('');
-          history.push('/signup');
+          api
+            .getUserInfo()
+            .then((res) => {
+              setCurrentUser(res);
+            })
+            .then(() => {
+              api.getCardList().then((res) => {
+                setCards(res);
+              });
+            })
+            .catch((err) => console.log(err));
         }
       })
       .catch((err) => console.log(err));
@@ -206,24 +215,23 @@ export default function App() {
   function handleLogout() {
     setToken(localStorage.removeItem('jwt'));
     setLoggedIn(false);
+    setEmail('');
     setCurrentUser(currentUser);
-  }
-
-  function onClose() {
-    setIsToolTipOpen(false);
+    console.log(currentUser, 'currentUser, 220!');
   }
 
   useEffect(() => {
     if (token) {
       auth
         .checkToken(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
+        .then(() => {
+          api.getUserInfo().then((res) => {
+            console.log(res, 'res');
             setCurrentUser(res);
             setEmail(res.email);
+            setLoggedIn(true);
             history.push('/');
-          }
+          });
         })
         .then(() => {
           api.getCardList().then((res) => {
