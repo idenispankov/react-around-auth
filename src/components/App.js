@@ -194,6 +194,8 @@ export default function App() {
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           setEmail(email);
+          setCurrentUser(currentUser);
+          console.log(currentUser, 'current user on login');
           history.push('/');
         } else if (!data.token) {
           setLoggedIn(false);

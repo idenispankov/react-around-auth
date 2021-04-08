@@ -70,7 +70,7 @@ class Api {
     }).then((res) => {
       if (res.ok) {
         console.log(res, 'res');
-        return res.json();
+        return res.json;
       } else {
         return Promise.reject('Error! ' + res.statusText);
       }
@@ -95,7 +95,7 @@ class Api {
     console.log(cardId, liked, 'likes');
     let method = 'DELETE';
     if (liked) method = 'PUT';
-    return fetch(this._baseUrl + '/cards/likes/' + cardId, {
+    return fetch(this._baseUrl + '/cards/' + cardId + '/likes/', {
       method: method,
       headers: this._headers,
     }).then((res) => {
