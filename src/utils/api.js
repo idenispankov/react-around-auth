@@ -62,7 +62,7 @@ class Api {
   }
 
   // POST /cards
-  addCard(data, e) {
+  addCard(data) {
     return fetch(this._baseUrl + '/cards', {
       method: 'POST',
       headers: this._headers,

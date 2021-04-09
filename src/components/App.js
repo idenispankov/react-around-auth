@@ -217,7 +217,6 @@ export default function App() {
     setToken(localStorage.getItem('jwt'));
     console.log(token, 'token');
     setLoggedIn(false);
-    setEmail('');
     console.log(currentUser, 'user');
     console.log(token, 'token 2');
   }
@@ -242,7 +241,7 @@ export default function App() {
         })
         .catch((err) => console.log(err));
     }
-  }, [history, token]);
+  }, [token]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
