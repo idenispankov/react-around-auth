@@ -213,11 +213,13 @@ export default function App() {
   }
 
   function handleLogout() {
-    setToken(localStorage.removeItem('jwt'));
+    localStorage.removeItem('jwt');
+    setToken(localStorage.getItem('jwt'));
+    console.log(token, 'token');
     setLoggedIn(false);
     setEmail('');
-    setCurrentUser(currentUser);
-    console.log(currentUser, 'currentUser, 220!');
+    console.log(currentUser, 'user');
+    console.log(token, 'token 2');
   }
 
   useEffect(() => {
