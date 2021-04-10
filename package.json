@@ -17,7 +17,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build"
+    "predeploy": "npm run build",
+    "deploy": "scp -r ./build/* idenispankov@13.82.46.131:/home/idenispankov/react-around-api-full/frontend"
   },
   "eslintConfig": {
     "extends": [
