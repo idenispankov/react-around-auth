@@ -31,7 +31,7 @@ export default class Api {
     });
   }
 
-  // PATCH users/me
+  // PATCH users/me DONE !!!!!
   setUserInfo(data) {
     return fetch(this._baseUrl + '/users/me', {
       headers: this._headers,
@@ -46,7 +46,7 @@ export default class Api {
     });
   }
 
-  // PATCH /users/me/avatar
+  // PATCH /users/me/avatar DONE !!!!!
   setUserAvatar(data) {
     return fetch(this._baseUrl + '/users/me/avatar', {
       method: 'PATCH',
@@ -104,11 +104,3 @@ export default class Api {
     });
   }
 }
-
-// export default new Api({
-//   baseUrl: 'http://localhost:3000',
-//   headers: {
-//     Authorization: `Bearer ${token}`,
-//     'Content-Type': 'application/json',
-//   },
-// });

@@ -3,7 +3,6 @@ import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
 
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import Api from '../utils/api';
-// import api from '../utils/api';
 import * as auth from '../utils/auth';
 import '../index.css';
 
@@ -26,12 +25,10 @@ export default function App() {
   const history = useHistory();
 
   const api = new Api({
-    baseUrl: 'http://localhost:3000',
-    options: {
-      headers: {
-        authorizarion: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
+    baseUrl: 'http://denis.students.nomoreparties.site',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
   });
 
@@ -197,24 +194,20 @@ export default function App() {
   }
 
   function handleLogin(email, password) {
-    auth
-      .login(email, password)
-      .then((data) => {
-        if (data.email) {
-          setLoggedIn(true);
-          setCurrentUser(data);
-          setEmail(data.email);
-          history.push('/');
-        } else if (!data.email) {
-          setLoggedIn(false);
-          history.push('/signin');
-        }
-      })
-      .then(() => {
-        api.getCardList().then((res) => {
-          console.log(res);
-        });
-      });
+    auth.login(email, password).then((data) => {
+      if (data.email) {
+        setLoggedIn(true);
+        setCurrentUser(data);
+        setEmail(data.email);
+        history.push('/');
+      } else if (!data.email) {
+        setLoggedIn(false);
+        history.push('/signin');
+      }
+    });
+    api.getCardList().then((res) => {
+      setCards(res);
+    });
   }
 
   function handleLogout() {
@@ -222,29 +215,27 @@ export default function App() {
     setLoggedIn(false);
   }
 
-  // useEffect(() => {
-  //   if (token) {
-  //     console.log(token, 'token from useEffect');
-  //     auth
-  //       .checkToken(token)
-  //       .then(() => {
-  //         api.getUserInfo().then((res) => {
-  //           console.log(res, 'res');
-  //           setCurrentUser(res);
-  //           setEmail(res.email);
-  //           setLoggedIn(true);
-  //           history.push('/');
-  //           setToken(token);
-  //         });
-  //       })
-  //       .then(() => {
-  //         api.getCardList().then((res) => {
-  //           setCards(res);
-  //         });
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    if (token) {
+      auth
+        .checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            setEmail(res.email);
+            setCurrentUser(res);
+            history.push('/');
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    api
+      .getCardList()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
