@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
 

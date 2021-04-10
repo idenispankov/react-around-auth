@@ -22,7 +22,6 @@ export default class Api {
     return fetch(this._baseUrl + '/users/me', {
       headers: this._headers,
     }).then((res) => {
-      console.log(res, 'res get /me');
       if (res.ok) {
         return res.json();
       } else {
