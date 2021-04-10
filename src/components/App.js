@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
 
 import { CurrentUserContext } from '../context/CurrentUserContext';
-import api from '../utils/api';
+import Api from '../utils/api';
+// import api from '../utils/api';
 import * as auth from '../utils/auth';
 import '../index.css';
 
@@ -21,9 +22,18 @@ import ProtectedRoute from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip';
 
 export default function App() {
+  const [token, setToken] = useState(localStorage.getItem('jwt'));
   const history = useHistory();
 
-  const [token, setToken] = useState(localStorage.getItem('jwt'));
+  const api = new Api({
+    baseUrl: 'http://localhost:3000',
+    options: {
+      headers: {
+        authorizarion: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    },
+  });
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
@@ -173,7 +183,6 @@ export default function App() {
     auth
       .register(email, password)
       .then((res) => {
-        console.log(res, 'register');
         if (res.email) {
           setIsregestered(true);
           handleTooltip();
@@ -191,57 +200,51 @@ export default function App() {
     auth
       .login(email, password)
       .then((data) => {
-        if (data.token) {
-          localStorage.setItem('jwt', data.token);
+        if (data.email) {
           setLoggedIn(true);
-          setEmail(email);
+          setCurrentUser(data);
+          setEmail(data.email);
           history.push('/');
-          api
-            .getUserInfo()
-            .then((res) => {
-              setCurrentUser(res);
-            })
-            .then(() => {
-              api.getCardList().then((res) => {
-                setCards(res);
-              });
-            })
-            .catch((err) => console.log(err));
+        } else if (!data.email) {
+          setLoggedIn(false);
+          history.push('/signin');
         }
       })
-      .catch((err) => console.log(err));
+      .then(() => {
+        api.getCardList().then((res) => {
+          console.log(res);
+        });
+      });
   }
 
   function handleLogout() {
     localStorage.removeItem('jwt');
-    setToken(localStorage.getItem('jwt'));
-    console.log(token, 'token');
     setLoggedIn(false);
-    console.log(currentUser, 'user');
-    console.log(token, 'token 2');
   }
 
-  useEffect(() => {
-    if (token) {
-      auth
-        .checkToken(token)
-        .then(() => {
-          api.getUserInfo().then((res) => {
-            console.log(res, 'res');
-            setCurrentUser(res);
-            setEmail(res.email);
-            setLoggedIn(true);
-            history.push('/');
-          });
-        })
-        .then(() => {
-          api.getCardList().then((res) => {
-            setCards(res);
-          });
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     console.log(token, 'token from useEffect');
+  //     auth
+  //       .checkToken(token)
+  //       .then(() => {
+  //         api.getUserInfo().then((res) => {
+  //           console.log(res, 'res');
+  //           setCurrentUser(res);
+  //           setEmail(res.email);
+  //           setLoggedIn(true);
+  //           history.push('/');
+  //           setToken(token);
+  //         });
+  //       })
+  //       .then(() => {
+  //         api.getCardList().then((res) => {
+  //           setCards(res);
+  //         });
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [token]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

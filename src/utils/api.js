@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -12,7 +12,6 @@ class Api {
       if (res.ok) {
         return res.json();
       } else {
-        console.log(res);
         return Promise.reject('Error! ' + res.statusText);
       }
     });
@@ -23,6 +22,7 @@ class Api {
     return fetch(this._baseUrl + '/users/me', {
       headers: this._headers,
     }).then((res) => {
+      console.log(res, 'res get /me');
       if (res.ok) {
         return res.json();
       } else {
@@ -105,10 +105,10 @@ class Api {
   }
 }
 
-export default new Api({
-  baseUrl: 'http://localhost:3000',
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-    'Content-Type': 'application/json',
-  },
-});
+// export default new Api({
+//   baseUrl: 'http://localhost:3000',
+//   headers: {
+//     Authorization: `Bearer ${token}`,
+//     'Content-Type': 'application/json',
+//   },
+// });
