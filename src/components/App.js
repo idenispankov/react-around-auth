@@ -27,7 +27,7 @@ export default function App() {
   const history = useHistory();
 
   const api = new Api({
-    baseUrl: 'https://api.denis.students.nomoreparties.site',
+    baseUrl: 'http://localhost:3000',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,
@@ -200,15 +200,15 @@ export default function App() {
       if (data.email) {
         setLoggedIn(true);
         setCurrentUser(data);
+        console.log(data, 'data on login - Should be User');
+        console.log(currentUser, 'currentUser on login - Exact User');
         setEmail(data.email);
         history.push('/');
+        console.log(currentUser, 'currentUser login');
       } else if (!data.email) {
         setLoggedIn(false);
         history.push('/signin');
       }
-    });
-    api.getCardList().then((res) => {
-      setCards(res);
     });
   }
 
@@ -218,6 +218,7 @@ export default function App() {
   }
 
   useEffect(() => {
+    console.log(token, 'useEffect token');
     if (token) {
       auth
         .checkToken(token)
@@ -226,7 +227,9 @@ export default function App() {
             setLoggedIn(true);
             setEmail(res.email);
             setCurrentUser(res);
+            console.log(res, 'RES!!!');
             history.push('/');
+            console.log(currentUser, 'User on useEffect');
           }
         })
         .catch((err) => console.log(err));
