@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
 
@@ -27,7 +26,7 @@ export default function App() {
   const history = useHistory();
 
   const api = new Api({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://www.denis.students.nomoreparties.site',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,
@@ -178,7 +177,7 @@ export default function App() {
     setIsToolTipOpen(false);
   }
 
-  // REGISTARTION, LOG IN, LOG OUT, TOKEN CHECK
+  // REGISTARTION, LOG IN, LOG OUT with TOKEN CHECK
   function handleRegister(email, password) {
     auth
       .register(email, password)
@@ -202,24 +201,19 @@ export default function App() {
       .then((data) => {
         if (data.email) {
           setLoggedIn(true);
-          setCurrentUser(data);
-          setEmail(data.email);
+          setToken(localStorage.getItem('jwt'));
           history.push('/');
         } else if (!data.email) {
           setLoggedIn(false);
           history.push('/signin');
         }
       })
-      .then(() => {
-        api.getCardList().then((res) => {
-          setCards(res);
-        });
-      })
       .catch((err) => console.log(err));
   }
 
   function handleLogout() {
     localStorage.removeItem('jwt');
+    setToken('');
     setLoggedIn(false);
   }
 
@@ -235,14 +229,15 @@ export default function App() {
             history.push('/');
           }
         })
-        .then(() => {
-          api.getCardList().then((res) => {
-            setCards(res);
-          });
+        .catch((err) => console.log(err));
+      api
+        .getCardList()
+        .then((res) => {
+          setCards(res);
         })
         .catch((err) => console.log(err));
     }
-  }, []);
+  }, [token]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

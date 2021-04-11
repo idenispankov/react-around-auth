@@ -4,7 +4,6 @@ export default class Api {
     this._headers = headers;
   }
 
-  // GET /cards
   getCardList() {
     return fetch(this._baseUrl + '/cards', {
       headers: this._headers,
@@ -17,7 +16,6 @@ export default class Api {
     });
   }
 
-  // GET /users/me
   getUserInfo() {
     return fetch(this._baseUrl + '/users/me', {
       headers: this._headers,
@@ -30,7 +28,6 @@ export default class Api {
     });
   }
 
-  // PATCH users/me DONE !!!!!
   setUserInfo(data) {
     return fetch(this._baseUrl + '/users/me', {
       headers: this._headers,
@@ -45,7 +42,6 @@ export default class Api {
     });
   }
 
-  // PATCH /users/me/avatar DONE !!!!!
   setUserAvatar(data) {
     return fetch(this._baseUrl + '/users/me/avatar', {
       method: 'PATCH',
@@ -60,7 +56,6 @@ export default class Api {
     });
   }
 
-  // POST /cards
   addCard(data) {
     return fetch(this._baseUrl + '/cards', {
       method: 'POST',
@@ -75,7 +70,6 @@ export default class Api {
     });
   }
 
-  // DELETE /cards/cardId
   removeCard(cardId) {
     return fetch(this._baseUrl + '/cards/' + cardId, {
       method: 'DELETE',
