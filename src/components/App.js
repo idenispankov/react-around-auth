@@ -214,7 +214,6 @@ export default function App() {
     localStorage.removeItem('jwt');
     setToken('');
     setLoggedIn(false);
-    setCurrentUser('');
   }
 
   useEffect(() => {
