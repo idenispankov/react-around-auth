@@ -26,7 +26,7 @@ export default function App() {
   const history = useHistory();
 
   const api = new Api({
-    baseUrl: 'https://www.denis.students.nomoreparties.site',
+    baseUrl: 'https://api.denis.students.nomoreparties.site',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,
