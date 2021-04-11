@@ -139,6 +139,7 @@ export default function App() {
       api
         .addCard(cardData)
         .then((newCard) => {
+          console.log(newCard, 'newCard');
           setCards([...cards, newCard]);
           closeAllPopups();
         })
@@ -196,20 +197,25 @@ export default function App() {
   }
 
   function handleLogin(email, password) {
-    auth.login(email, password).then((data) => {
-      if (data.email) {
-        setLoggedIn(true);
-        setCurrentUser(data);
-        console.log(data, 'data on login - Should be User');
-        console.log(currentUser, 'currentUser on login - Exact User');
-        setEmail(data.email);
-        history.push('/');
-        console.log(currentUser, 'currentUser login');
-      } else if (!data.email) {
-        setLoggedIn(false);
-        history.push('/signin');
-      }
-    });
+    auth
+      .login(email, password)
+      .then((data) => {
+        if (data.email) {
+          setLoggedIn(true);
+          setCurrentUser(data);
+          setEmail(data.email);
+          history.push('/');
+        } else if (!data.email) {
+          setLoggedIn(false);
+          history.push('/signin');
+        }
+      })
+      .then(() => {
+        api.getCardList().then((res) => {
+          setCards(res);
+        });
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleLogout() {
@@ -218,7 +224,6 @@ export default function App() {
   }
 
   useEffect(() => {
-    console.log(token, 'useEffect token');
     if (token) {
       auth
         .checkToken(token)
@@ -227,19 +232,16 @@ export default function App() {
             setLoggedIn(true);
             setEmail(res.email);
             setCurrentUser(res);
-            console.log(res, 'RES!!!');
             history.push('/');
-            console.log(currentUser, 'User on useEffect');
           }
+        })
+        .then(() => {
+          api.getCardList().then((res) => {
+            setCards(res);
+          });
         })
         .catch((err) => console.log(err));
     }
-    api
-      .getCardList()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.log(err));
   }, []);
 
   return (
