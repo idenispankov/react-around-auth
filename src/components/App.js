@@ -138,7 +138,6 @@ export default function App() {
       api
         .addCard(cardData)
         .then((newCard) => {
-          console.log(newCard, 'newCard');
           setCards([...cards, newCard]);
           closeAllPopups();
         })
@@ -215,6 +214,7 @@ export default function App() {
     localStorage.removeItem('jwt');
     setToken('');
     setLoggedIn(false);
+    setCurrentUser('');
   }
 
   useEffect(() => {
